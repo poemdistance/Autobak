@@ -27,8 +27,13 @@ def main():
            os.path.join(home, '.tmux.conf'), 
            os.path.join(home, '.ssh'), 
            os.path.join('', '/etc/shadowsocks'),
+           os.path.join('', '/etc/pacman.conf'),
+           os.path.join('', '/etc/pacman.d'),
            os.path.join(home, '.vim'),
             ]
+
+    for f in needBak:
+        os.system('rsync -av '+ f + ' ' + defaultBakpath )
 
     while(True):
         oldtime = []
@@ -36,10 +41,7 @@ def main():
         time.sleep(90)
         for i, f in enumerate(needBak):
             if isUpdate( f, oldtime[i] ):
-                print('File %s changed' % f)
-                print('Rsync files...')
-                os.system('rsync -av '+ f + ' ' + defaultBakpath)
-                print('Rsync finish')
+                os.system('rsync -av '+ f + ' ' + defaultBakpath )
 
 
     print('All done.', end='\n\n')
